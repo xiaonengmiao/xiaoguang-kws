@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "xiaoguang-kws"
+version = "0.1.0"
+description = "Inference for two 小光 (xiǎo guāng) wake word models: an openWakeWord classifier and a fine-tuned sherpa-onnx keyword spotter"
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+requires-python = ">=3.9"
+dependencies = [
+    "numpy",
+    "onnxruntime>=1.16",
+    # The sherpa-onnx wheels need sherpa-onnx-core (the native libraries), which uv's lock does not pick up
+    # from the wheel metadata; keep both on the same version.
+    "sherpa-onnx==1.13.8",
+    "sherpa-onnx-core==1.13.8",
+    "soundfile",
+    "scipy",
+    "huggingface_hub>=0.20",
+]
+
+[project.optional-dependencies]
+mic = ["sounddevice"]
+
+[project.scripts]
+xiaoguang-kws = "xiaoguang_kws.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["xiaoguang_kws*"]
